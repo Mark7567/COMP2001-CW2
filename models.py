@@ -4,7 +4,7 @@ from marshmallow import validates, ValidationError
 class User(db.Model):
     __tablename__ = '[User]'
     __table_args__ = {'schema': 'CW2'}
-    user_id = db.Column(db.String(6), primary_key = True, nullable = False)
+    user_id = db.Column(db.String(6), primary_key = True, nullable = False, unique = True)
     email_address = db.Column(db.String(50), nullable = False)
     password = db.Column(db.String(20), nullable = False)
     role = db.Column(db.String(5), nullable = False)
@@ -25,16 +25,16 @@ class User(db.Model):
 class Trail(db.Model):
     __tablename__ = 'Trail'
     __table_args__ = {'schema': 'CW2'}
-    trail_id = db.Column(db.String(6), primary_key = True, nullable = False)
+    trail_id = db.Column(db.String(6), primary_key = True, nullable = False, unique = True)
     trail_name = db.Column(db.String(128), nullable = False)
     trail_summary = db.Column(db.String(255), nullable = False)
     trail_description = db.Column(db.String(255), nullable = False)
     difficulty = db.Column(db.String(8), nullable = False)
     location = db.Column(db.String(128), nullable = False)
     length = db.Column(db.Float, nullable = False)
-    elevation_gain = db.Column(db.Int, nullable = False)
+    elevation_gain = db.Column(db.Integer, nullable = False)
     route_type = db.Column(db.String(14), nullable = False)
-    owner_id = db.Column(db.String(6), db.ForeignKey('CW2.[User].user_id'), nullable = False)
+    owner_id = db.Column(db.String(6), db.ForeignKey('CW2.[User].user_id'), nullable = False, unique = True)
     pt1_lat = db.Column(db.Float, nullable = False)
     pt1_long = db.Column(db.Float, nullable = False)
     pt1_desc = db.Column(db.String(255))
@@ -137,15 +137,15 @@ class Trail(db.Model):
 class Trail_Feature(db.Model):
     __tablename__ = 'Trail_Feature'
     __table_args__ = {'schema': 'CW2'}
-    trail_id = db.Column(db.String(6), db.ForeignKey('CW2.Trail.trail_id'), primary_key = True, nullable = False)
-    trail_feature_id = db.Column(db.String(6), db.ForeignKey('CW2.Feature.trail_feature_id'), primary_key = True, nullable = False)
+    trail_id = db.Column(db.String(6), db.ForeignKey('CW2.Trail.trail_id'), primary_key = True, nullable = False, unique = True)
+    trail_feature_id = db.Column(db.String(6), db.ForeignKey('CW2.Feature.trail_feature_id'), primary_key = True, nullable = False, unique = True)
 
 
 
 class Feature(db.Model):
     __tablename__ = 'Feature'
     __table_args__ = {'schema': 'CW2'}
-    trail_feature_id = db.Column(db.String(6), primary_key = True, nullable = False)
+    trail_feature_id = db.Column(db.String(6), primary_key = True, nullable = False, unique = True)
     trail_feature = db.Column(db.String(255))
 
     @validates('trail_feature_id')

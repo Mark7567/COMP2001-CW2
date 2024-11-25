@@ -46,7 +46,7 @@ def updatePassword(user_id, user):
 
 
 #Update Email Address
-def updatePassword(user_id, user):
+def updateEmail(user_id, user):
     existing_user = User.query.filter(User.user_id == user_id).one_or_none()
 
     if existing_user:
@@ -60,7 +60,7 @@ def updatePassword(user_id, user):
 
 
 #Update Username
-def updatePassword(user_id, user):
+def updateUsername(user_id, user):
     existing_user = User.query.filter(User.user_id == user_id).one_or_none()
 
     if existing_user:

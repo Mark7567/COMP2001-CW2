@@ -1,13 +1,13 @@
-from flask import Flask, rendertemplate
+from flask import render_template
 import config
 from models import Trail
 
-app = config.connexapp
-app.addapi(config.basedir / 'swagger.yml') 
+app = config.connex_app
+app.add_api(config.basedir / 'swagger.yml')
+
 @app.route('/')
-
 def home():
-    return rendertemplate('home.html', trails = Trail.query.all())
+    return render_template('home.html', trails = Trail.query.all())
 
-if __name__ == '__main':
+if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8000,debug=True)

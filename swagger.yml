@@ -1,0 +1,133 @@
+openapi: 3.0.0
+
+info:
+  title: 'CW2 Coursework'
+  description: 'Microservice for Trail Service'
+  version: '1.0.0'
+
+servers:
+  - url: '/api'
+
+components:
+  schemas:
+    user:
+      type: 'object'
+      required:
+        - user_id
+      properties:
+        user_id:
+          type: 'string'
+        username:
+          type: 'string'
+        email_address:
+          type: 'string'
+        password:
+          type: 'string'
+  parameters:
+    user_id:
+      name: 'user_id'
+      description: 'The unique ID of the user'
+      in: path
+      required: True
+      schema:
+        type: 'string'
+
+paths:
+  /user:
+    get:
+      operationId: 'user.read_all'
+      tags:
+        - 'User'
+      summary: 'Reads all users'
+      responses:
+        '200':
+          description: "Successfully read user list"
+        '400':
+          description: "Failed to read user list"
+    post:
+      operationId: 'user.create'
+      tags:
+        - 'User'
+      summary: 'Creates a user'
+      requestBody:
+        description: 'User to create'
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: 'user'
+              $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: 'User successfully created'
+        '400':
+          description: 'Failed to create user'
+  /user/{user_id}:
+    get:
+      operationId: 'user.retrieve'
+      tags:
+        - 'User'
+      summary: 'Reads one individual user'
+      parameters:
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: 'User read successfully'
+    put:
+      tags:
+        - 'User'
+      operationId: 'user.updatePassword'
+      summary: 'Update user password'
+      parameters:
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: 'User updated successfully'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: 'user'
+              $ref: '#/components/schemas/user'
+    put:
+      tags:
+        - 'User'
+      operationId: 'user.updateEmail'
+      summary: 'Update user email address'
+      parameters:
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: 'User updated successfully'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: 'user'
+              $ref: '#/components/schemas/user'
+    put:
+      tags:
+        - 'User'
+      operationId: 'user.updateUsername'
+      summary: 'Update user username'
+      parameters:
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: 'User updated successfully'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: 'user'
+              $ref: '#/components/schemas/user'
+    delete:
+      tags:
+        - 'User'
+      operationId: 'user.delete'
+      summary: 'Deletes a user'
+      parameters:
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '204':
+          description: 'User successfully deleted'
