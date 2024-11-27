@@ -155,7 +155,7 @@ components:
           type: 'string'
         trail_feature:
           type: 'string'
-    trail_feature:
+    trail-feature:
       type: 'object'
       required:
         - trail_id
@@ -690,4 +690,120 @@ paths:
         - $ref: '#/components/parameters/trail_id'
       responses:
         '204':
-          description: 'Trail successfully deleted'    
+          description: 'Trail successfully deleted'
+  /feature:
+    get:
+      operationId: 'feature.read_all'
+      tags:
+        - 'Feature'
+      summary: 'Reads all features'
+      responses:
+        '200':
+          description: "Successfully read feature list"
+        '400':
+          description: "Failed to read feature list"
+    post:
+      operationId: 'feature.create'
+      tags:
+        - 'Feature'
+      summary: 'Creates a new feature'
+      requestBody:
+        description: 'Feature to create'
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: 'feature'
+              $ref: '#/components/schemas/feature'
+      responses:
+        '201':
+          description: 'Feature successfully created'
+        '400':
+          description: 'Failed to create feature'
+  /feature/{trail_feature_id}:
+    get:
+      operationId: 'feature.retrieve'
+      tags:
+        - 'Feature'
+      summary: 'Reads one specific feature'
+      parameters:
+        - $ref: '#/components/parameters/trail_feature_id'
+      responses:
+        '200':
+          description: 'Feature read successfully'
+    put:
+      tags:
+        - 'Feature'
+      operationId: 'feature.updateTrailFeature'
+      summary: 'Update trail feature'
+      parameters:
+        - $ref: '#/components/parameters/trail_feature_id'
+      responses:
+        '200':
+          description: 'Feature updated successfully'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: 'feature'
+              $ref: '#/components/schemas/feature'
+    delete:
+      tags:
+        - 'Feature'
+      operationId: 'feature.delete'
+      summary: 'Deletes a feature'
+      parameters:
+        - $ref: '#/components/parameters/trail_feature_id'
+      responses:
+        '204':
+          description: 'Feature successfully deleted'
+  /trail-feature:
+    get:
+      operationId: 'trail-feature.read_all'
+      tags:
+        - 'Trail_Feature'
+      summary: 'Reads all trail features'
+      responses:
+        '200':
+          description: "Successfully read trail feature list"
+        '400':
+          description: "Failed to read trail feature list"
+    post:
+      operationId: 'trail-feature.create'
+      tags:
+        - 'Trail_Feature'
+      summary: 'Creates a new trail feature'
+      requestBody:
+        description: 'Trail feature to create'
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: 'trail_feature'
+              $ref: '#/components/schemas/feature'
+      responses:
+        '201':
+          description: 'Trail feature successfully created'
+        '400':
+          description: 'Failed to create trail feature'
+  /trail-feature/{trail_id}/{trail_feature_id}:
+    get:
+      operationId: 'trail-feature.retrieve'
+      tags:
+        - 'Trail_Feature'
+      summary: 'Reads one specific trail feature'
+      parameters:
+        - $ref: '#/components/parameters/trail_id/trail_feature_id'
+      responses:
+        '200':
+          description: 'Trail feature read successfully'
+    delete:
+      tags:
+        - 'Trail_Feature'
+      operationId: 'trail-feature.delete'
+      summary: 'Deletes a trail feature'
+      parameters:
+        - $ref: '#/components/parameters/trail_id/trail_feature_id'
+      responses:
+        '204':
+          description: 'Trail feature successfully deleted'
