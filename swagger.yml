@@ -21,19 +21,19 @@ components:
       properties:
         user_id:
           type: 'string'
-          maxlength: 6
+          maxLength: 6
         username:
           type: 'string'
-          maxlength: 50
+          maxLength: 50
         email_address:
           type: 'string'
-          maxlength: 20
+          maxLength: 20
         role:
           type: 'string'
-          maxlength: 5
+          maxLength: 5
         password:
           type: 'string'
-          maxlength: 64
+          maxLength: 64
     trail:
       type: 'object'
       required:
@@ -60,24 +60,25 @@ components:
       properties:
         trail_id:
           type: 'string'
-          maxlength: 6
+          maxLength: 6
         trail_name:
           type: 'string'
-          maxlength: 128
+          maxLength: 128
         trail_summary:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         trail_description:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         difficulty:
           type: 'string'
-          maxlength: 8
+          maxLength: 8
         location:
           type: 'string'
-          maxlength: 128
+          maxLength: 128
         length:
-          type: 'float'
+          type: 'number'
+          format: 'float'
           minimum: 0.0
           maximum: 999.9
         elevation_gain:
@@ -86,65 +87,75 @@ components:
           maximum: 99999
         route_type:
           type: 'string'
-          maxlength: 14
+          maxLength: 14
         owner_id:
           type: 'string'
-          maxlength: 6
+          maxLength: 6
         pt1_lat:
-          type: 'float'
-          minimum: -90 
-          maximum: 90
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
         pt1_long:
-          type: 'float'
-          minimum: -180
-          maximum: 180
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
         pt1_desc:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         pt2_lat:
-          type: 'float'
-          minimum: -90 
-          maximum: 90
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
         pt2_long:
-          type: 'float'
-          minimum: -180
-          maximum: 180
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
         pt2_desc:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         pt3_lat:
-          type: 'float'
-          minimum: -90 
-          maximum: 90
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
         pt3_long:
-          type: 'float'
-          minimum: -180
-          maximum: 180
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
         pt3_desc:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         pt4_lat:
-          type: 'float'
-          minimum: -90 
-          maximum: 90
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
         pt4_long:
-          type: 'float'
-          minimum: -180
-          maximum: 180
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
         pt4_desc:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
         pt5_lat:
-          type: 'float'
-          minimum: -90 
-          maximum: 90
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
         pt5_long:
-          type: 'float'
-          minimum: -180
-          maximum: 180
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
         pt5_desc:
           type: 'string'
-          maxlength: 255
+          maxLength: 255
     feature:
       type: 'object'
       required:
@@ -169,7 +180,21 @@ components:
     user_id:
       name: 'user_id'
       description: 'The unique ID of the user'
-      in: path
+      in: 'query'
+      required: True
+      schema:
+        type: 'string'
+    trail_id:
+      name: 'trail_id'
+      description: 'The unique ID of the trail'
+      in: 'query'
+      required: True
+      schema:
+        type: 'string'
+    trail_feature_id:
+      name: 'trail_feature_id'
+      description: 'The unique ID of the trail feature'
+      in: 'query'
       required: True
       schema:
         type: 'string'
@@ -793,17 +818,8 @@ paths:
         - 'Trail_Feature'
       summary: 'Reads one specific trail feature'
       parameters:
-        - $ref: '#/components/parameters/trail_id/trail_feature_id'
+        - $ref: '#/components/parameters/trail_id'
+        - $ref: '#/components/parameters/trail_feature_id'
       responses:
         '200':
           description: 'Trail feature read successfully'
-    delete:
-      tags:
-        - 'Trail_Feature'
-      operationId: 'trail-feature.delete'
-      summary: 'Deletes a trail feature'
-      parameters:
-        - $ref: '#/components/parameters/trail_id/trail_feature_id'
-      responses:
-        '204':
-          description: 'Trail feature successfully deleted'
