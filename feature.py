@@ -9,7 +9,7 @@ def read_all():
 
 #Create
 def create(feature):
-    trail_feature_id = feature.get("trail_id")
+    trail_feature_id = feature.get("trail_feature_id")
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
     if existing_feature is None:
@@ -23,7 +23,7 @@ def create(feature):
 
 #Retrieve
 def retrieve(trail_feature_id):
-    feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_more()
+    feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
     if feature is not None:
         return feature_schema.dump(feature)

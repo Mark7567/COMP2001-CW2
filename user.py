@@ -23,7 +23,7 @@ def create(user):
 
 #Retrieve
 def retrieve(user_id):
-    user = User.query.filter(User.user_id == user_id).one_or_more()
+    user = User.query.filter(User.user_id == user_id).one_or_none()
 
     if user is not None:
         return user_schema.dump(user)

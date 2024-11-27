@@ -1,4 +1,4 @@
-from models import trail_schema, trails_schema, Trail
+from models import trail_schema, trails_schema, Trail, Trail_Feature
 from config import db
 from flask import make_response, abort
 
@@ -23,7 +23,7 @@ def create(trail):
 
 #Retrieve
 def retrieve(trail_id):
-    trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_more()
+    trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if trail is not None:
         return trail_schema.dump(trail)
@@ -158,7 +158,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 1 Latitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint1Latitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -172,7 +172,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 1 Description
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint1Description(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -186,7 +186,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 2 Longitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint2Longitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -200,7 +200,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 2 Latitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint2Latitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -214,7 +214,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 2 Description
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint2Description(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -228,7 +228,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 3 Longitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint3Longitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -242,7 +242,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 3 Latitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint3Latitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -256,7 +256,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 3 Description
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint3Description(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -270,7 +270,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 4 Longitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint4Longitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -284,7 +284,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 4 Latitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint4Latitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -298,7 +298,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 4 Description
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint4Description(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -312,7 +312,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 5 Longitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint5Longitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -326,7 +326,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 5 Latitude
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint5Latitude(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -340,7 +340,7 @@ def updatePoint1Longitude(trail_id, trail):
 
 
 #Update Point 5 Description
-def updatePoint1Longitude(trail_id, trail):
+def updatePoint5Description(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
     if existing_trail:
@@ -356,8 +356,11 @@ def updatePoint1Longitude(trail_id, trail):
 #Delete
 def delete(trail_id):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
+    existing_trail_feature = Trail_Feature.query.filter(Trail_Feature.trail_id == trail_id).all()
 
     if existing_trail:
+        for x in existing_trail_feature:
+            db.session.delete(x)
         db.session.delete(existing_trail)
         db.session.commit()
         return make_response(f'{trail_id} has been successfully deleted', 200)
