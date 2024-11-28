@@ -2,12 +2,13 @@ from models import feature_schema, features_schema, Feature
 from config import db
 from flask import make_response, abort
 
+#Reads all entries - Tested - Works as intended
 def read_all():
     feature = Feature.query.all()
     return features_schema.dump(feature)
 
 
-#Create
+#Create - Tested - Works as intended
 def create(feature):
     trail_feature_id = feature.get("trail_feature_id")
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
@@ -21,7 +22,7 @@ def create(feature):
         abort(406, f'Feature with trail feature ID {trail_feature_id} already exists')
 
 
-#Retrieve
+#Retrieve - Tested - Works as intended
 def retrieve(trail_feature_id):
     feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
@@ -31,13 +32,13 @@ def retrieve(trail_feature_id):
         abort(404, f'Feature with trail feature ID {trail_feature_id} cannot be found')
 
 
-#Update Trail Feature
-def updateTrailFeature(trail_feature_id, feature):
+#Update Trail Feature - Tested - Does not work ---> Allows user to view trail_feature_id (however cannot change it)
+def updateTrailFeature(trail_feature_id, trail_feature):
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
     if existing_feature:
-        update_feature = feature_schema.load(feature, session=db.session)
-        existing_feature.trail_feature = update_feature.trail_feature
+        update_feature = feature_schema.load(Feature.trail_feature, session=db.session)
+        existing_feature.feature = update_feature.feature
         db.session.merge(existing_feature)
         db.session.commit()
         return feature_schema.dump(existing_feature), 201
@@ -45,7 +46,7 @@ def updateTrailFeature(trail_feature_id, feature):
         abort(404, f'Feature with trail feature ID {trail_feature_id} cannot be found')
 
 
-#Delete
+#Delete - Tested - Works as intended
 def delete(trail_feature_id):
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 

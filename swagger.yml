@@ -240,54 +240,6 @@ paths:
       responses:
         '200':
           description: 'User read successfully'
-    put:
-      tags:
-        - 'User'
-      operationId: 'user.updatePassword'
-      summary: 'Update user password'
-      parameters:
-        - $ref: '#/components/parameters/user_id'
-      responses:
-        '200':
-          description: 'User updated successfully'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'user'
-              $ref: '#/components/schemas/user'
-    put:
-      tags:
-        - 'User'
-      operationId: 'user.updateEmail'
-      summary: 'Update user email address'
-      parameters:
-        - $ref: '#/components/parameters/user_id'
-      responses:
-        '200':
-          description: 'User updated successfully'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'user'
-              $ref: '#/components/schemas/user'
-    put:
-      tags:
-        - 'User'
-      operationId: 'user.updateUsername'
-      summary: 'Update user username'
-      parameters:
-        - $ref: '#/components/parameters/user_id'
-      responses:
-        '200':
-          description: 'User updated successfully'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'user'
-              $ref: '#/components/schemas/user'
     delete:
       tags:
         - 'User'
@@ -805,7 +757,7 @@ paths:
           application/json:
             schema:
               x-body-name: 'trail_feature'
-              $ref: '#/components/schemas/feature'
+              $ref: '#/components/schemas/trail-feature'
       responses:
         '201':
           description: 'Trail feature successfully created'

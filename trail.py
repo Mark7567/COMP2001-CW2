@@ -2,12 +2,13 @@ from models import trail_schema, trails_schema, Trail, Trail_Feature
 from config import db
 from flask import make_response, abort
 
+#Reads all entries - Tested - Works as intended
 def read_all():
     trail = Trail.query.all()
     return trails_schema.dump(trail)
 
 
-#Create
+#Create - Tested - Works as intended
 def create(trail):
     trail_id = trail.get("trail_id")
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
@@ -21,7 +22,7 @@ def create(trail):
         abort(406, f'Trail with trail ID {trail_id} already exists')
 
 
-#Retrieve
+#Retrieve - Tested - Works as intended
 def retrieve(trail_id):
     trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -31,7 +32,7 @@ def retrieve(trail_id):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Update Trail Name
+#Update Trail Name - Tested - Does not work ---> Allows user to view trail_feature_id (however cannot change it
 def updateTrailName(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -45,7 +46,7 @@ def updateTrailName(trail_id, trail):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Update Trail Summary
+#Update Trail Summary - Not Tested
 def updateTrailSummary(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -59,7 +60,7 @@ def updateTrailSummary(trail_id, trail):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Update Trail Description
+#Update Trail Description - Not Tested
 def updateTrailDescription(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -73,7 +74,7 @@ def updateTrailDescription(trail_id, trail):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Update Difficulty
+#Update Difficulty - Not Tested
 def updateDifficulty(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -87,7 +88,7 @@ def updateDifficulty(trail_id, trail):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Update Location
+#Update Location - Not Tested
 def updateLocation(trail_id, trail):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
 
@@ -353,7 +354,7 @@ def updatePoint5Description(trail_id, trail):
         abort(404, f'Trail with trail ID {trail_id} cannot be found')
 
 
-#Delete
+#Delete - Tested - Works as intended
 def delete(trail_id):
     existing_trail = Trail.query.filter(Trail.trail_id == trail_id).one_or_none()
     existing_trail_feature = Trail_Feature.query.filter(Trail_Feature.trail_id == trail_id).all()
