@@ -1,4 +1,4 @@
-from models import feature_schema, features_schema, Feature
+from models import feature_schema, features_schema, feature_create_schema, Feature
 from config import db
 from flask import make_response, abort
 
@@ -14,10 +14,10 @@ def create(feature):
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
     if existing_feature is None:
-        new_feature = feature_schema.load(feature, session=db.session)
+        new_feature = feature_create_schema.load(feature, session=db.session)
         db.session.add(new_feature)
         db.session.commit()
-        return feature_schema.dump(new_feature), 201
+        return feature_create_schema.dump(new_feature), 201
     else:
         abort(406, f'Feature with trail feature ID {trail_feature_id} already exists')
 
@@ -32,13 +32,14 @@ def retrieve(trail_feature_id):
         abort(404, f'Feature with trail feature ID {trail_feature_id} cannot be found')
 
 
-#Update Trail Feature - Tested - Does not work ---> Allows user to view trail_feature_id (however cannot change it)
-def updateTrailFeature(trail_feature_id, trail_feature):
+#Update Trail Feature - Tested - Works as intended
+def update(trail_feature_id, feature):
     existing_feature = Feature.query.filter(Feature.trail_feature_id == trail_feature_id).one_or_none()
 
     if existing_feature:
-        update_feature = feature_schema.load(Feature.trail_feature, session=db.session)
-        existing_feature.feature = update_feature.feature
+        feature_schema.exclude = ["trail_feature_id"]
+        update_feature = feature_schema.load(feature, session=db.session)
+        existing_feature.trail_feature = update_feature.trail_feature
         db.session.merge(existing_feature)
         db.session.commit()
         return feature_schema.dump(existing_feature), 201

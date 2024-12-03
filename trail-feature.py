@@ -24,15 +24,21 @@ def create(trail_feature):
         abort(406, f'Trail feature with trail feature ID {trail_feature_id} and trail ID {trail_id} already exists')
 
 
-#Retrieve - Tested - Does not work ---> Needs remaking as requests for both trail_id and trail_feature_id
-def retrieve(trail_id):
-    trail_id = Trail_Feature.query.filter(Trail_Feature.trail_id == trail_id).one_or_none()
-    trail_feature_id = Trail_Feature.query.all(Trail_Feature.trail_id == trail_id).one_or_none()
-
-    if trail_id is not None:
-        return trail_feature_schema.dump(trail_id), trail_feature_schema.dump(trail_feature_id)
+#Retrieve - Tested - Works as intended
+def retrieve(id, type):
+    if type == 'Trail':
+        feature = 'trail_id'
+    elif type == 'Feature':
+        feature = 'trail_feature_id'
     else:
-        abort(404, f'Feature with trail feature ID {trail_id} cannot be found')
+        abort(404, f'Invalid type')
+    
+    trail_feature_id = Trail_Feature.query.filter(getattr(Trail_Feature, feature) == id).all()
+    
+    if trail_feature_id:
+        return trail_features_schema.dump(trail_feature_id)
+    else:
+        abort(404, f'Feature with trail feature ID {trail_feature_id} cannot be found')
 
 
 #Delete

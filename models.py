@@ -166,14 +166,22 @@ class Feature(db.Model):
 
 class TrailSchema(ma.SQLAlchemyAutoSchema):
     owner_id = fields.Str()
+    trail_id = fields.String(dump_only=True)
     class Meta:
         model = Trail
         load_instance = True
         sqla_session = db.session
 
+class TrailCreateSchema(ma.SQLAlchemyAutoSchema):
+    owner_id = fields.Str()
+    class Meta:
+        model = Trail
+        load_instance = True
+        sqla_session = db.session
 
 trail_schema = TrailSchema()
 trails_schema = TrailSchema(many=True)
+trail_create_schema = TrailCreateSchema()
 
 
 
@@ -189,6 +197,14 @@ users_schema = UserSchema(many=True)
 
 
 class FeatureSchema(ma.SQLAlchemyAutoSchema):
+    trail_feature_id = fields.String(dump_only=True)
+    class Meta:
+        model = Feature
+        load_instance = True
+        sqla_session = db.session
+
+
+class FeatureCreateSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Feature
         load_instance = True
@@ -197,7 +213,7 @@ class FeatureSchema(ma.SQLAlchemyAutoSchema):
 
 feature_schema = FeatureSchema()
 features_schema = FeatureSchema(many=True)
-
+feature_create_schema = FeatureCreateSchema()
 
 class TrailFeatureSchema(ma.SQLAlchemyAutoSchema):
     trail_id = fields.Str()

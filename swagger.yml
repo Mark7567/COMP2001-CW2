@@ -156,6 +156,120 @@ components:
         pt5_desc:
           type: 'string'
           maxLength: 255
+    trail_update:
+      type: 'object'
+      required:
+        - trail_name
+        - trail_summary
+        - trail_description
+        - difficulty
+        - location
+        - length
+        - elevation_gain
+        - route_type
+        - pt1_lat
+        - pt1_long
+        - pt2_lat
+        - pt2_long
+        - pt3_lat
+        - pt3_long
+        - pt4_lat
+        - pt4_long
+        - pt5_lat
+        - pt5_long
+      properties:
+        trail_name:
+          type: 'string'
+          maxLength: 128
+        trail_summary:
+          type: 'string'
+          maxLength: 255
+        trail_description:
+          type: 'string'
+          maxLength: 255
+        difficulty:
+          type: 'string'
+          maxLength: 8
+        location:
+          type: 'string'
+          maxLength: 128
+        length:
+          type: 'number'
+          format: 'float'
+          minimum: 0.0
+          maximum: 999.9
+        elevation_gain:
+          type: 'integer'
+          minimum: 0
+          maximum: 99999
+        route_type:
+          type: 'string'
+          maxLength: 14
+        pt1_lat:
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
+        pt1_long:
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
+        pt1_desc:
+          type: 'string'
+          maxLength: 255
+        pt2_lat:
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
+        pt2_long:
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
+        pt2_desc:
+          type: 'string'
+          maxLength: 255
+        pt3_lat:
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
+        pt3_long:
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
+        pt3_desc:
+          type: 'string'
+          maxLength: 255
+        pt4_lat:
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
+        pt4_long:
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
+        pt4_desc:
+          type: 'string'
+          maxLength: 255
+        pt5_lat:
+          type: 'number'
+          format: 'float'
+          minimum: -90.0
+          maximum: 90.0
+        pt5_long:
+          type: 'number'
+          format: 'float'
+          minimum: -180.0
+          maximum: 180.0
+        pt5_desc:
+          type: 'string'
+          maxLength: 255
     feature:
       type: 'object'
       required:
@@ -164,6 +278,13 @@ components:
       properties:
         trail_feature_id:
           type: 'string'
+        trail_feature:
+          type: 'string'
+    feature_update:
+      type: 'object'
+      required:
+        - trail_feature
+      properties:
         trail_feature:
           type: 'string'
     trail-feature:
@@ -293,371 +414,19 @@ paths:
     put:
       tags:
         - 'Trail'
-      operationId: 'trail.updateTrailName'
-      summary: 'Update trail name'
+      operationId: 'trail.update'
+      summary: 'Update trail details'
       parameters:
         - $ref: '#/components/parameters/trail_id'
       responses:
         '200':
-          description: 'Trail name updated successfully'
+          description: 'Trail details updated successfully'
       requestBody:
         content:
           application/json:
             schema:
               x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateTrailSummary'
-      summary: 'Update trail summary'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Trail summary successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateTrailDescription'
-      summary: 'Update trail description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Trail description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateDifficulty'
-      summary: 'Update trail difficulty'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Trail difficulty successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateLocation'
-      summary: 'Update trail location'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Trail location successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateLength'
-      summary: 'Update trail length'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Trail length successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateElevationGain'
-      summary: 'Update elevation gain of trail'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Elevation gain successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updateRouteType'
-      summary: 'Update route type'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Route type successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint1Longitude'
-      summary: 'Update longitude of point 1'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Longitude of point 1 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint1Latitude'
-      summary: 'Update latitude of point 1'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Latitude of point 1 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint1Description'
-      summary: 'Update point 1 description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Point 1 description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint2Longitude'
-      summary: 'Update longitude of point 2'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Longitude of point 2 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint2Latitude'
-      summary: 'Update latitude of point 2'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Latitude of point 2 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint2Description'
-      summary: 'Update point 2 description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Point 2 description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint3Longitude'
-      summary: 'Update longitude of point 3'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Longitude of point 3 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint3Latitude'
-      summary: 'Update latitude of point 3'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Latitude of point 3 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint3Description'
-      summary: 'Update point 3 description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Point 3 description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint4Longitude'
-      summary: 'Update longitude of point 4'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Longitude of point 4 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint4Latitude'
-      summary: 'Update latitude of point 4'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Latitude of point 4 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint4Description'
-      summary: 'Update point 4 description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Point 4 description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint5Longitude'
-      summary: 'Update longitude of point 5'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Longitude of point 5 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint5Latitude'
-      summary: 'Update latitude of point 5'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Latitude of point 5 successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
-    put:
-      tags:
-        - 'Trail'
-      operationId: 'trail.updatePoint5Description'
-      summary: 'Update point 5 description'
-      parameters:
-        - $ref: '#/components/parameters/trail_id'
-      responses:
-        '200':
-          description: 'Point 5 description successfully updated'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              x-body-name: 'trail'
-              $ref: '#/components/schemas/trail'
+              $ref: '#/components/schemas/trail_update'
     delete:
       tags:
         - 'Trail'
@@ -711,8 +480,8 @@ paths:
     put:
       tags:
         - 'Feature'
-      operationId: 'feature.updateTrailFeature'
-      summary: 'Update trail feature'
+      operationId: 'feature.update'
+      summary: 'Update feature'
       parameters:
         - $ref: '#/components/parameters/trail_feature_id'
       responses:
@@ -723,7 +492,7 @@ paths:
           application/json:
             schema:
               x-body-name: 'feature'
-              $ref: '#/components/schemas/feature'
+              $ref: '#/components/schemas/feature_update'
     delete:
       tags:
         - 'Feature'
@@ -763,15 +532,28 @@ paths:
           description: 'Trail feature successfully created'
         '400':
           description: 'Failed to create trail feature'
-  /trail-feature/{trail_id}/{trail_feature_id}:
+  /trail-feature/{id}:
     get:
       operationId: 'trail-feature.retrieve'
       tags:
         - 'Trail_Feature'
       summary: 'Reads one specific trail feature'
       parameters:
-        - $ref: '#/components/parameters/trail_id'
-        - $ref: '#/components/parameters/trail_feature_id'
+        - name: 'id'
+          in: 'path'
+          description: 'The ID to search'
+          required: True
+          schema:
+            type: string
+        - name: 'type'
+          in: 'query'
+          description: 'Trail ID or Trail Feature ID'
+          required: True
+          schema:
+            type: string
+            enum:
+              - Trail
+              - Feature
       responses:
         '200':
           description: 'Trail feature read successfully'
