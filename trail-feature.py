@@ -41,4 +41,15 @@ def retrieve(id, type):
         abort(404, f'Feature with trail feature ID {trail_feature_id} cannot be found')
 
 
-#Delete
+#Delete - Not Tested
+def delete(trail_id):
+    existing_trail_id = Trail_Feature.query.filter(Trail_Feature.trail_id == trail_id).one_or_none()
+    existing_trail_feature_id = Trail_Feature.query.filter(Trail_Feature.trail_feature_id).all()
+
+    if existing_trail_id:
+        for x in existing_trail_feature_id:
+            db.session.delete(x)
+        db.session.commit()
+        return make_response(f'{existing_trail_feature_id} has been successfully deleted', 200)
+    else:
+        abort(404, f'Trail with trail ID {trail_id} cannot be found')

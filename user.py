@@ -1,6 +1,7 @@
 from models import user_schema, users_schema, User
 from config import db
 from flask import make_response, abort
+import requests
 
 #Reads all entries - Tested - Works as intended
 def read_all():
@@ -42,3 +43,8 @@ def delete(user_id):
         return make_response(f'{user_id} has been successfully deleted', 200)
     else:
         abort(404, f'User with user ID {user_id} cannot be found')
+
+
+#Authenticate
+def authenticate():
+    auth_url = 'https://web.socem.plymouth.ac.uk/COMP2001/auth/api/users'
