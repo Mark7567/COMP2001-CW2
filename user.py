@@ -45,6 +45,22 @@ def delete(user_id):
         abort(404, f'User with user ID {user_id} cannot be found')
 
 
-#Authenticate
-def authenticate():
+#Authenticate - Works as intended
+def authenticate(user_authenticate):
     auth_url = 'https://web.socem.plymouth.ac.uk/COMP2001/auth/api/users'
+    
+    credentials = {
+        'email': user_authenticate['email'],
+        'password': user_authenticate['password']
+    }
+
+    response = requests.post(auth_url, json=credentials)
+
+    if response.status_code == 200:
+        try:
+            json_response = response.json()
+            return make_response(f'Authentication complete: {json_response}', 200)
+        except requests.JSONDecodeError:
+            return make_response(f'Response is not valid JSON. Raw response content: {response.text}', 400)
+    else:
+        return make_response(f'Authentication failed with status code {response.status_code}', 400)

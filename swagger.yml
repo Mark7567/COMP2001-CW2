@@ -34,6 +34,18 @@ components:
         password:
           type: 'string'
           maxLength: 64
+    authenticate:
+      type: 'object'
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: 'string'
+          maxLength: 20
+        password:
+          type: 'string'
+          maxLength: 64
     trail:
       type: 'object'
       required:
@@ -511,9 +523,9 @@ paths:
       summary: 'Reads all trail features'
       responses:
         '200':
-          description: "Successfully read trail feature list"
+          description: 'Successfully read trail feature list'
         '400':
-          description: "Failed to read trail feature list"
+          description: 'Failed to read trail feature list'
     post:
       operationId: 'trail-feature.create'
       tags:
@@ -557,3 +569,52 @@ paths:
       responses:
         '200':
           description: 'Trail feature read successfully'
+  /trail-feature/trail/{trail_id}:
+    delete:
+      operationId: 'trail-feature.delete_trail_id'
+      tags:
+        - 'Trail_Feature'
+      summary: 'Deletes all trails with specific trail id'
+      parameters:
+        - name: trail_id
+          in: path
+          required: True
+          description: The ID of the trail to delete from the link entity
+          schema:
+            type: string
+      responses:
+        '204': 
+          description: 'Trail feature successfully deleted'
+  /trail-feature/feature/{trail_feature_id}:
+    delete:
+      operationId: 'trail-feature.delete_trail_feature_id'
+      tags:
+        - 'Trail_Feature'
+      summary: 'Deletes all trails with specific trail feature id'
+      parameters:
+        - name: trail_feature_id
+          in: path
+          required: True
+          description: The ID of the trail feature to delete from link entity table
+          schema:
+            type: string
+      responses:
+        '204': 
+          description: 'Trail feature successfully deleted'
+  /authenticate:
+    post:
+      operationId: 'user.authenticate'
+      tags:
+        - 'User'
+      summary: 'Authenticates user'
+      requestBody:
+        description: 'User authentication'
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: 'user_authenticate'
+              $ref: '#/components/schemas/authenticate'
+      responses:
+        '200':
+          description: 'User authenticated successfully'
